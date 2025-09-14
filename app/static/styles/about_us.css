@@ -1,0 +1,219 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #FAF6F1;
+  color: black;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  color: black;
+  border-bottom: 2px solid #cccccc;
+  font-size: 1.2rem;
+  height: 80px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 90px;
+  margin-right: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  color: #132144;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.login-btn,
+.signup-btn {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-left: 1rem;
+}
+
+.signup-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.signup-btn:hover {
+  background-color: #218838;
+}
+
+/* About Container */
+.about-container {
+  max-width: 1100px;
+  margin: 60px auto 40px auto;  
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+
+.about-container h1 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #28a745;
+}
+
+/* İçerik İkili Kolon */
+.content-columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 2%;
+  flex-wrap: nowrap;
+}
+
+.about-box {
+  flex: 0 0 49%;
+  background-color: #f5f5f5;
+  border-left: 5px solid #28a745;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+
+
+
+
+.about-box h2 {
+  color: #28a745;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.about-box p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.about-box ul {
+  padding-left: 20px;
+  list-style: none;
+}
+
+.about-box ul li {
+  background-color: #e7f7ea;
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-left: 4px solid #28a745;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Back Button */
+.back-btn {
+  display: inline-block;
+  background-color: #28a745;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  margin-top: 40px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #218838;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .navbar-left {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    padding-top: 10px;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+  .navbar-right {
+    width: 100%;
+    justify-content: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .login-btn,
+  .signup-btn {
+    margin: 0.5rem;
+  }
+
+  .content-columns {
+    flex-direction: column;
+  }
+
+  .about-box {
+    flex: 1 1 100%;
+  }
+
+  .about-container h1 {
+    font-size: 2em;
+  }
+
+  .about-box h2 {
+    font-size: 1.3em;
+  }
+}

@@ -1,0 +1,184 @@
+/* Genel Stil */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #FAF6F1;
+    color: black;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    color: black;
+    border-bottom: 2px solid #cccccc;
+    font-size: 1.2rem;
+    height: 80px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 90px;
+    margin-right: 1rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #132144;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.login-btn, .signup-btn {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-left: 1rem;
+}
+
+.signup-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.signup-btn:hover {
+    background-color: #218838;
+}
+
+/* Genel Container */
+.register-container {
+    display: flex;
+    height: calc(100vh - 80px); /* Navbar yüksekliği çıkarıldı */
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Grafik Alanı */
+.graphic-section {
+    flex: 1;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.graphic-section h3 {
+    font-size: 1.8rem;
+    color: #132144;
+}
+
+.graphic-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: black;
+    margin-bottom: 1rem;
+}
+
+.graphic-section .character img {
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+}
+
+/* Kayıt Formu Alanı */
+.register-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1;
+}
+
+.register-section h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #132144;
+}
+
+.register-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.register-section form input, 
+.register-section form select, 
+.register-section form button {
+    padding: 0.8rem;
+    width: 100%;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: #FAF6F1;
+    color: black;
+    font-size: 1rem;
+}
+
+.register-section form button {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.register-section form button:hover {
+    background-color: #218838;
+}
+
+.register-section p a {
+    color: blue;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.register-section p a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}

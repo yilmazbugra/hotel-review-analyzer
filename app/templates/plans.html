@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Plan Your Trip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css' rel='stylesheet' />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      width: 80px;
+      margin-right: 1rem;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+    .navbar-right a {
+      margin-left: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+    }
+    .navbar-right a:first-child {
+      background-color: #28a745;
+      color: white;
+    }
+    .navbar-right a:last-child {
+      background-color: #dc3545;
+      color: white;
+    }
+    .main-content {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .favorite-card {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .favorite-card a {
+      color: #007bff;
+      font-weight: bold;
+    }
+    .remove-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .calendar-container {
+      margin-top: 3rem;
+    }
+    .fc-link {
+      color: #d7e7f7;
+      text-decoration: underline;
+    }
+    .delete-icon {
+      cursor: pointer;
+      color: red;
+      margin-left: 6px;
+    }
+     .fc-event-title {
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.85rem;
+  }
+
+  .fc-event {
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 4px !important;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  max-width: 100% !important;
+}
+
+.fc-daygrid-event-harness {
+  max-width: 100% !important;
+}
+
+.fc-daygrid-event-dot {
+  display: none !important;
+}
+
+.fc-daygrid-event-title {
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="/static/styles/images/logo.png" class="logo" />
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+          <li><a href="#">Plans</a></li>
+          <li><a href="{{ url_for('gpt.favorites') }}">Favorites</a></li>
+          <li><a href="/chat_bot">AI ChatBot</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navbar-right">
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.profile') }}">My Profile</a>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="main-content">
+    <h2>Your Travel Plans</h2>
+
+    {% if favorites %}
+      <div id="sortableList">
+        {% for fav in favorites %}
+          <div class="favorite-card" data-id="{{ fav.id }}">
+            <div class="drag-handle">☰ Drag to Reorder</div>
+            <a href="{{ fav.url }}" target="_blank">🔗 Visit Hotel Page</a>
+            <p class="summary-text">
+              {{ fav.analysis[:250] }}{% if fav.analysis|length > 250 %}...{% endif %}
+            </p>
+            <p><em>Saved on: {{ fav.date_added.strftime("%Y-%m-%d %H:%M") }}</em></p>
+            <form method="POST" action="/gpt/remove_from_plan/{{ fav.id }}">
+              <button type="submit" class="remove-btn">Remove from Plan</button>
+            </form>
+            <form method="POST" action="/gpt/add_to_calendar">
+              <input type="hidden" name="title" value="Planned: {{ fav.url[:30] }}">
+              <input type="hidden" name="url" value="{{ fav.url }}">
+              <label>Select Date:</label>
+              <input type="date" name="date" required>
+              <button type="submit" class="remove-btn" style="background-color:#007bff">Add to Calendar</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No hotels planned yet. Use “Add to Plan” in favorites.</p>
+    {% endif %}
+
+    <div class="calendar-container">
+      <div id="calendar"></div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+  <script>
+    new Sortable(document.getElementById('sortableList'), {
+      animation: 200,
+      handle: '.drag-handle',
+      onEnd: function () {
+        const order = Array.from(document.querySelectorAll('.favorite-card')).map(el => el.dataset.id);
+        fetch('/gpt/plans', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order: order })
+        });
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'dayGridMonth',
+        height: 600,
+        events: [
+          {% for event in calendar_events %}
+          {
+            id: '{{ event.id }}',
+            title: '{{ event.title }}',
+            start: '{{ event.start.strftime("%Y-%m-%d") }}',
+            url: '{{ event.url }}'
+          },
+          {% endfor %}
+        ],
+        eventDidMount: function(info) {
+          const link = document.createElement('a');
+          link.href = info.event.url;
+          link.target = '_blank';
+          link.textContent = info.event.title;
+          link.className = 'fc-link';
+
+          const deleteBtn = document.createElement('span');
+          deleteBtn.textContent = '🗑️';
+          deleteBtn.className = 'delete-icon';
+          deleteBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fetch(`/gpt/delete_calendar_event/${info.event.id}`, {
+              method: 'POST'
+            }).then(res => res.json()).then(data => {
+              if (data.status === 'success') {
+                info.event.remove();
+              }
+            });
+          };
+
+          info.el.innerHTML = '';
+          info.el.appendChild(link);
+          info.el.appendChild(deleteBtn);
+        },
+        eventClick: function(info) {
+          if (!info.jsEvent.target.classList.contains('delete-icon')) {
+            window.open(info.event.url, '_blank');
+            info.jsEvent.preventDefault();
+          }
+        }
+      });
+
+      calendar.render();
+    });
+  </script>
+</body>
+</html>

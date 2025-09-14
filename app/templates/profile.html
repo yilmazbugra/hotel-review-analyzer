@@ -1,0 +1,81 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Profile</title>
+    <link rel="stylesheet" href="/static/styles/profile.css" />
+    <style>
+      
+    </style>
+  </head>
+  <body>
+  <header class="navbar">
+  <div class="navbar-left">
+    <img src="/static/styles/images/logo.png" alt="Logo" class="logo">
+    <nav>
+      <ul class="nav-links">
+        {% if current_user.role == 'user' %}
+          <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+          <li><a href="/gpt/favorites">Favorites</a></li>
+          <li><a href="/chat_bot">AI ChatBot</a></li>
+           <li><a href="/gpt/plans">Plans</a></li>
+        {% elif current_user.role == 'staff' %}
+          <li><a href="{{ url_for('auth.owner_index') }}">Home</a></li>
+          <li><a href="/analytics">Analytics</a></li>
+          <li><a href="/owner_reviews">Reviews</a></li>
+          <li><a href="/chat_bot">AI ChatBot</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+
+
+  <div class="navbar-right">
+    <form action="{{ url_for('auth.profile') }}" method="GET">
+      <button type="submit" class="profile-btn">My Profile</button>
+    </form>
+    <form action="/auth/logout" method="GET">
+    <button type="submit" class="logout-btn">Logout</button>
+  </form>
+  </div>
+
+
+
+    </header>
+    <div class="profile-container">
+      <h1>My Profile</h1>
+      <form method="POST" action="{{ url_for('auth.profile') }}">
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" required>
+          <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+          <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+          <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
+        </select>
+
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" value="{{ user.country }}" required>
+
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" value="{{ user.city }}" required>
+
+        <button type="submit">Update Profile</button>
+      </form>
+
+      <form method="POST" action="{{ url_for('auth.delete_profile') }}" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.')">
+        <button type="submit" class="delete-btn">Delete Profile</button>
+      </form>
+    </div>
+  </body>
+  </html>

@@ -1,0 +1,194 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Review Input</title>
+    <link rel="stylesheet" href="/static/styles/analytics_index.css">
+    <style>
+      /* Yükleniyor ekranı ve spinner */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.85);
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        font-size: 1.2rem;
+        color: #132144;
+        font-weight: bold;
+      }
+
+      .spinner {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #28a745;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 0.9s linear infinite;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="navbar-left">
+        <img src="/static/styles/images/logo.png" alt="Logo" class="logo">
+        <nav>
+          <ul class="nav-links">
+            {% if current_user.role == 'user' %}
+              <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+              <li><a href="/gpt/favorites">Favorites</a></li>
+              <li><a href="/chat_bot">AI ChatBot</a></li>
+            {% elif current_user.role == 'staff' %}
+              <li><a href="{{ url_for('auth.owner_index') }}">Home</a></li>
+              <li><a href="/analytics">Analytics</a></li>
+              <li><a href="{{ url_for('owner_reviews') }}">Reviews</a></li>
+              <li><a href="/chat_bot">AI ChatBot</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+      <div class="navbar-right">
+        <form action="{{ url_for('auth.profile') }}" method="GET" style="display:inline;">
+          <button type="submit" class="profile-btn">My Profile</button>
+        </form>
+        <form action="/auth/logout" method="GET" style="display:inline; margin-left: 10px;">
+          <button type="submit" class="logout-btn">Logout</button>
+        </form>
+      </div>
+    </header>
+
+    <!-- Yükleniyor ekranı -->
+    <div id="loading-screen">
+      <div class="spinner"></div>
+      <p>Analyzing reviews, please wait...</p>
+    </div>
+
+    <!-- Ana içerik -->
+    <div class="hero">
+      <div class="overlay">
+        <div class="content">
+          <h1>Analyze Hotel Reviews Effortlessly</h1>
+          <p>Paste the reviews you want to analyze below:</p>
+          <div class="input-container">
+            <form id="analyzeForm" action="/analytics_result" method="POST">
+              <textarea name="reviews" rows="10" cols="60" placeholder="Paste your hotel reviews here..." required></textarea><br>
+              <button type="submit" id="analyze-button">Analyze Reviews</button>
+            </form>
+
+            <!-- Dosya Yükleme Alanı -->
+            <div class="upload-section">
+              <form id="uploadForm" action="/upload_file" method="POST" enctype="multipart/form-data">
+                <div class="upload-top-row">
+                  <label for="fileInput" class="upload-label">
+                    <span class="file-label-icon">📄</span>
+                    <span class="file-label-text">Upload PDF, Word or CSV</span>
+                  </label>
+                  <div class="file-display" id="file-name-box">
+                    <span class="file-icon">📌</span>
+                    <span id="file-name">No file selected yet</span>
+                  </div>
+                </div>
+                <div class="upload-bottom-row">
+                  <button type="submit" class="upload-btn">Analyze File</button>
+                </div>
+                <input type="file" id="fileInput" name="file" accept=".pdf,.docx, .csv" required>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <a href="#how-it-works" class="scroll-down-arrow right">
+  <div class="arrow-circle">↓</div>
+</a>
+
+    </div>
+
+    <!-- Kullanım Şeması -->
+  <section class="usage-guide" id="how-it-works">
+    <h2>How It Works</h2>
+
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <img src="/static/styles/images/1..png" alt="Step 1">
+      <p><strong>Enter your reviews</strong> manually or upload a file (PDF, Word, or CSV) to get started with analyzing real customer feedback using AI technology.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <img src="/static/styles/images/2..png" alt="Step 2">
+      <p><strong>Preview your reviews</strong> and make sure they are correctly listed. Click <strong>Analyze Reviews</strong> to trigger the intelligent analysis process.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <img src="/static/styles/images/3..png" alt="Step 3">
+      <p><strong>Let the AI do the work!</strong> Our system processes all reviews in seconds, performing natural language understanding and sentiment classification in the background.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">4</div>
+      <img src="/static/styles/images/4..png" alt="Step 4">
+      <p><strong>Get instant insights</strong> into how many reviews are positive or negative, and let our AI <strong>predict your hotel’s rating on a 0–10 scale</strong> based on the overall sentiment.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">5</div>
+      <img src="/static/styles/images/5...png" alt="Step 5">
+      <p><strong>Visualize key themes</strong> through an AI-generated keyword cloud that highlights frequently mentioned positive and negative terms from your reviews.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">6</div>
+      <img src="/static/styles/images/6..png" alt="Step 6">
+      <p><strong>Download your report</strong> as a professional-looking PDF that includes sentiment summaries, keyword highlights, and the AI-predicted hotel score—ideal for presentations or improvement planning.</p>
+    </div>
+  </section>
+
+    <!-- JS: Scroll animasyonu ve event listenerlar -->
+    <script>
+      // Scroll animasyonu
+      const cards = document.querySelectorAll('.step-card');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+      cards.forEach(card => observer.observe(card));
+
+      // Yükleniyor ekranı
+      document.getElementById("analyzeForm").addEventListener("submit", function () {
+        document.getElementById("loading-screen").style.display = "flex";
+      });
+      document.getElementById("uploadForm").addEventListener("submit", function () {
+        document.getElementById("loading-screen").style.display = "flex";
+      });
+
+      // Dosya adı gösterimi
+      document.getElementById("fileInput").addEventListener("change", function () {
+        const fileName = this.files[0] ? this.files[0].name : "Henüz dosya seçilmedi";
+        document.getElementById("file-name").textContent = fileName;
+      });
+    </script>
+    
+
+  </body>
+  </html>

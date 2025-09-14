@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Review History</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/owner_reviews.css') }}">
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-left">
+    <img src="{{ url_for('static', filename='styles/images/logo.png') }}" alt="Logo" class="logo">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="{{ url_for('auth.owner_index') }}">Home</a></li>
+        <li><a href="/analytics">Analytics</a></li>
+        <a href="{{ url_for('owner_reviews') }}">Reviews</a>
+        <li><a href="/chat_bot">AI ChatBot</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="navbar-right">
+    <form action="{{ url_for('auth.profile') }}" method="GET">
+      <button class="profile-btn">My Profile</button>
+    </form>
+    <form action="{{ url_for('auth.logout') }}" method="GET">
+      <button class="logout-btn">Logout</button>
+    </form>
+  </div>
+</header>
+
+<div class="container">
+  <h1>Review Analysis History</h1>
+
+  {% if results %}
+    {% for review in results %}
+      <div class="review-card" id="review-{{ loop.index }}">
+        <p><strong>Date:</strong> {{ review.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Total Reviews:</strong> {{ review.total_reviews }}</p>
+        <p><strong>Positive:</strong> {{ review.positive_count }}</p>
+        <p><strong>Negative:</strong> {{ review.negative_count }}</p>
+        <p><strong>Score:</strong> {{ review.score }} / 10</p>
+        <p><strong>Reason:</strong> {{ review.reason }}</p>
+        <button class="download-btn" onclick="downloadPDF('review-{{ loop.index }}')">📄 Download PDF</button>
+        <form action="{{ url_for('analytics_bp.delete_review', review_id=review.id) }}" method="POST" style="display:inline;">
+    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this review?')">🗑 Delete</button>
+  </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No reviews available.</p>
+  {% endif %}
+</div>
+
+<script>
+  function downloadPDF(id) {
+    const element = document.getElementById(id);
+    html2canvas(element).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jspdf.jsPDF();
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save("review_summary.pdf");
+    });
+  }
+</script>
+
+</body>
+</html>

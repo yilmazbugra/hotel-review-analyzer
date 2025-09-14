@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Owner Dashboard</title>
+  <link rel="stylesheet" href="/static/styles/owner_index.css">
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('form[action="/gpt_owner/owner_analyze"]');
+      const spinner = document.getElementById('loading-spinner');
+  
+      if (form) {
+        form.addEventListener('submit', () => {
+          spinner.style.display = 'flex';  // Spinner’ı göster
+        });
+      }
+    });
+  </script>
+  
+</head>
+<div id="loading-spinner" style="display: none;">
+  <div class="spinner"></div>
+</div>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="/static/styles/images/logo.png" alt="Logo" class="logo">
+      <nav>
+        <ul class="nav-links">
+           {% if current_user.role == 'user' %}
+      <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+      <li><a href="/gpt/favorites">Favorites</a></li>
+      <li><a href="/chat_bot">AI ChatBot</a></li>
+    {% elif current_user.role == 'staff' %}
+      <li><a href="{{ url_for('auth.owner_index') }}">Home</a></li>
+      <li><a href="/analytics">Analytics</a></li>
+      <a href="{{ url_for('owner_reviews') }}">Reviews</a>
+      <li><a href="/chat_bot">AI ChatBot</a></li>
+    {% endif %}
+        </ul>
+      </nav>
+    </div>
+    <div class="navbar-right">
+  <form action="{{ url_for('auth.profile') }}" method="GET" style="display:inline;">
+    <button type="submit" class="profile-btn">My Profile</button>
+  </form>
+  <form action="/auth/logout" method="GET" style="display:inline; margin-left: 10px;">
+    <button type="submit" class="logout-btn">Logout</button>
+  </form>
+</div>
+  </header>
+  <!-- ✅ Popup Flash Mesaj -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if message == "No reviews found to analyze." %}
+        <div id="popup-flash" class="popup-alert">
+          {{ message }}
+        </div>
+        <script>
+          setTimeout(() => {
+            const popup = document.getElementById("popup-flash");
+            if (popup) {
+              popup.style.opacity = '0';
+              popup.style.transform = 'translateY(-20px)';
+              setTimeout(() => popup.remove(), 1000); // animasyon sonrası kaldır
+            }
+          }, 5000);
+        </script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<style>
+  .popup-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+    transition: all 0.6s ease;
+    font-weight: bold;
+  }
+</style>
+
+
+ <!-- Hero Section -->
+<div class="hero">
+  <img src="/static/styles/images/owner_pik1.jpg" alt="Hero Background" class="hero-bg">
+  <div class="overlay">
+    <div class="content">
+      <h1>Manage Your Hotel Reviews with Ease</h1>
+      <p>Gain insights from customer feedback and improve your business.</p>
+      <p>Enter your hotel website on booking.com URL to get AI-powered analysis.</p>
+      <div class="input-container">
+        <form method="POST" action="/gpt_owner/owner_analyze">
+          <input type="text" id="url-input" name="url" placeholder="Enter hotel website URL" required>
+          <button type="submit" id="analyze-button">Analyze Reviews</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Information Sections -->
+  <section class="info-section">
+    <div class="info-content">
+      <img src="/static/styles/images/owner_pik2,.jpg" alt="Review Analysis">
+      <div class="text-content">
+        <h2>Understand What Guests Really Think</h2>
+        <p>Our AI doesn't just read reviews—it understands them. Discover top positive and negative trends, guest satisfaction drivers, and actionable feedback within seconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="info-content">
+      <img src="/static/styles/images/lobby.jpg" alt="Business Growth">
+      <div class="text-content">
+        <h2>Transform Feedback into Business Growth</h2>
+        <p>With clear insights into guest preferences and pain points, you can optimize services, tailor experiences, and improve ratings—leading to stronger reputation and higher bookings.</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI-Powered Analysis Results</title>
+  <link rel="stylesheet" href="/static/styles/analytics_result_styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="/static/scripts/analytics_script.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="navbar-left">
+    <img src="/static/styles/images/logo.png" alt="Logo" class="logo">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="{{ url_for('owner_reviews') }}">MyReviews</a></li>
+        <li><a href="/analytics">Analytics</a></li>
+        <li><a href="/chat_bot">Chatbot</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="navbar-right">
+    <form action="{{ url_for('auth.profile') }}" method="GET" style="display:inline;">
+      <button type="submit" class="profile-btn">My Profile</button>
+    </form>
+    <form action="/auth/logout" method="GET" style="display:inline; margin-left: 10px;">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  </div>
+</header>
+
+<!-- Main Results -->
+<div class="result-container">
+  <h1 class="result-title">Review Analysis Summary</h1>
+
+  <div class="summary-box">
+    <ul>
+      <li><strong>Total Reviews:</strong> {{ result.summary.total_reviews }}</li>
+      <li><strong>Positive Reviews:</strong> {{ result.summary.positive_count }}</li>
+      <li><strong>Negative Reviews:</strong> {{ result.summary.negative_count }}</li>
+      <li><strong>Positive Percentage:</strong> {{ result.summary.positive_percentage }}%</li>
+      <li><strong>Negative Percentage:</strong> {{ result.summary.negative_percentage }}%</li>
+    </ul>
+  </div>
+
+  <div class="score-box">
+    <h2>Predicted Hotel Score</h2>
+    <p><strong>{{ result.score }}</strong> / 10</p>
+    <p>{{ result.score_reason }}</p>
+  </div>
+
+  <div class="chart-box">
+    <canvas id="sentimentChart" width="400" height="400"></canvas>
+  </div>
+
+  <div class="keywords-section">
+    <div class="keywords-box">
+      <h2>Positive Keywords</h2>
+      <div id="positive-wordcloud" class="wordcloud"></div>
+      <ul>
+        {% for word, count in result.positive_keywords %}
+          <li>{{ word }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="keywords-box">
+      <h2>Negative Keywords</h2>
+      <div id="negative-wordcloud" class="wordcloud"></div>
+      <ul>
+        {% for word, count in result.negative_keywords %}
+          <li>{{ word }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <button id="download-pdf" class="download-btn">📄 Download as PDF</button>
+    <a href="/analytics" class="download-btn" style="text-align: center;">🔁 Analyze Again</a>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+  const ctx = document.getElementById('sentimentChart').getContext('2d');
+  const sentimentChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Positive', 'Negative'],
+      datasets: [{
+        data: [{{ result.summary.positive_count }}, {{ result.summary.negative_count }}],
+        backgroundColor: ['#4CAF50', '#F44336'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Sentiment Distribution'
+        }
+      }
+    }
+  });
+
+  document.getElementById("download-pdf").addEventListener("click", () => {
+    const resultSection = document.querySelector(".result-container");
+    html2canvas(resultSection).then(canvas => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jspdf.jsPDF("p", "mm", "a4");
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("hotel_review_analysis.pdf");
+    });
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+<script>
+  const positiveWords = {{ result.positive_keywords | tojson }};
+  const negativeWords = {{ result.negative_keywords | tojson }};
+
+  // WordCloud için tıklama özelliği
+  function createWordCloud(elementId, words, color) {
+    WordCloud(document.getElementById(elementId), {
+      list: words,
+      gridSize: 10,
+      weightFactor: function (size) {
+        return size * 10;
+      },
+      color: color,
+      backgroundColor: '#ffffff',
+      click: function(item) {
+        const [word, count] = item;
+        alert(`"${word}" appears ${count} times`);
+      }
+    });
+  }
+
+  createWordCloud("positive-wordcloud", positiveWords, '#2e7d32');
+  createWordCloud("negative-wordcloud", negativeWords, '#c62828');
+</script>
+
+
+</body>
+</html>

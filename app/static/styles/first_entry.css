@@ -1,0 +1,155 @@
+/* Genel Stil */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #FAF6F1;
+    color: white;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white; /* Beyaz Bar */
+    color: black;
+    border-bottom: 2px solid #cccccc;
+    font-size: 1.2rem;
+    height: 80px;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 90px;
+    margin-right: 1rem;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-links li {
+    margin: 0 1rem;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .nav-links a:hover {
+    color: #132144;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .login-btn, .signup-btn {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-left: 1rem;
+  }
+  
+  .signup-btn {
+    background-color: #28a745;
+    color: rgb(255, 255, 255);
+  }
+  
+  .signup-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Ana İçerik Alanı */
+  .main-container {
+    display: flex;
+    height: calc(100vh - 80px); /* Navbar yüksekliği çıkarıldı */
+    align-items: center;
+    padding: 0 2rem;
+  }
+  
+  .left-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .right-container {
+    flex: 1;
+    padding: 2rem;
+    color: black;
+  }
+  
+  .illustration-img {
+    width: 80%; /* Görselin genişliği */
+    max-width: 400px;
+    height: auto;
+  }
+  
+  .hero-text {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .sub-text {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+  }
+  
+  .cta-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #218838;
+  }
+  
+  .link {
+    color: black;
+    text-decoration: underline;
+    font-size: 1rem;
+    display: inline-block;
+    margin-top: 1rem;
+  }
+
+
+.logout-btn {
+  background-color: #dc3545;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
+}

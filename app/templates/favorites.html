@@ -1,0 +1,172 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your Favorite Hotels</title>
+    <link rel="stylesheet" href="/static/styles/user_analyze.css" />
+    <style>
+      .favorites-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .favorite-card {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .favorite-card a {
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .favorite-card p {
+        margin-top: 0.6rem;
+      }
+
+      .remove-btn {
+        margin-top: 1rem;
+        background-color: #ff4d4d;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .remove-btn:hover {
+        background-color: #e60000;
+      }
+
+      .main-content {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      p.no-fav {
+        text-align: center;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+      }
+
+      .toggle-btn {
+        background-color: transparent;
+        border: none;
+        color: #006400;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.85rem;
+        padding: 0;
+        margin-left: 5px;
+        vertical-align: middle;
+      }
+
+      .toggle-btn:hover {
+        text-decoration: underline;
+      }
+      .plan-btn {
+    margin-top: 0.5rem;
+    background-color: #28a745;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .plan-btn:hover {
+    background-color: #218838;
+  }
+
+    </style>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="navbar-left">
+        <img src="/static/styles/images/logo.png" alt="Logo" class="logo"/>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+            <li><a href="/gpt/plans">Plans</a></li>
+            <li><a href="/gpt/form">New Analysis</a></li>
+            <li><a href="/chat_bot">AI ChatBot</a></li> 
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <h1>Your Favorite Hotels</h1>
+
+      {% if favorites %}
+        <div class="favorites-container">
+          {% for fav in favorites %}
+            <div class="favorite-card">
+              <a href="{{ fav.url }}" target="_blank">🔗 Visit Hotel Page</a>
+              
+              <p class="summary-text">
+                {{ fav.analysis[:300] }}
+                <span class="dots">...</span>
+                <span class="more-text" style="display:none">{{ fav.analysis[300:] }}</span>
+                <button onclick="toggleText(this)" class="toggle-btn" type="button">Show more</button>
+              </p>
+
+              <p><em>Saved on: {{ fav.date_added.strftime('%Y-%m-%d %H:%M') }}</em></p>
+
+              {% if fav.order_index is not none %}
+    <p style="color: green; font-weight: bold;">✅ Already in Plan</p>
+  {% else %}
+    <form method="POST" action="/gpt/add_to_plan/{{ fav.id }}">
+      <button type="submit" class="plan-btn">Add to Plan</button>
+    </form>
+  {% endif %}
+
+
+              <form method="GET" action="/gpt/remove_favorite/{{ fav.id }}">
+                <button type="submit" class="remove-btn">Remove</button>
+                
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="no-fav">No favorites yet. Go analyze a hotel and add it to favorites!</p>
+      {% endif %}
+    </main>
+    
+    <script>
+      function toggleText(button) {
+        const summaryText = button.parentElement;
+        const dots = summaryText.querySelector(".dots");
+        const moreText = summaryText.querySelector(".more-text");
+
+        if (moreText.style.display === "none") {
+          moreText.style.display = "inline";
+          dots.style.display = "none";
+          button.innerText = "Show less";
+        } else {
+          moreText.style.display = "none";
+          dots.style.display = "inline";
+          button.innerText = "Show more";
+        }
+      }
+    </script>
+
+  </body>
+  </html>

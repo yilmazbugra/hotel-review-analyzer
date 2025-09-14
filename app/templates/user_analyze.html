@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analysis Result</title>
+  <link rel="stylesheet" href="/static/styles/user_analyze.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="/static/styles/images/logo.png" alt="Logo" class="logo"/>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+          <li><a href="/gpt/plans">Plans</a></li>
+          <li><a href="/gpt/favorites">Favorites</a></li>
+          <li><a href="/chat_bot">AI ChatBot</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navbar-right">
+      <form action="/auth/logout" method="GET">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="result-container">
+      <h1>Analysis Result</h1>
+      <div class="analysis-content">
+        <h2>Summary:</h2>
+        <p>{{ analysis }}</p>
+      </div>
+    </section>
+    
+    <form method="POST" action="/gpt/add_to_favorites">
+  <input type="hidden" name="url" value="{{ hotel_url }}">
+  <textarea name="analysis" style="display:none">{{ analysis }}</textarea>
+  <button type="submit" class="btn-fav">⭐ Add to Favorites</button>
+</form>
+
+
+    <section class="explore-section">
+  <h2>🌍 Would You Like to Discover These Places in the City You Will Travel To?</h2>
+  <p>{{ location_recommendation }}</p>
+</section>
+
+    <section class="actions">
+      <a href="/auth/user_index" class="btn btn-back">Back to Dashboard</a>
+      <a href="/gpt/form" class="btn btn-new-analysis">Analyze Another Link</a>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hotel Hub</title>
+    <link rel="stylesheet" href="/static/styles/login.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="navbar-left">
+            <img src="/static/styles/images/logo.png" alt="Logo" class="logo">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/platform">Platform</a></li>
+                    <li><a href="/about_us">About Us</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <a href="/auth/login" class="login-btn">Log In</a>
+            <a href="/auth/register" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <div class="login-container">
+        <div class="graphic-section">
+            <div class="statistic">
+                <h3>Hotel Hub</h3>
+                <p>Welcome to the magical world of AI! 
+                    <span>Access the analysis of comments about your business with our advanced AI system.</span>
+                </p>
+            </div>
+            <div class="statistic">
+                <h3>Advanced Insights</h3>
+                <p>We provide powerful AI-driven insights. <span>Discover our AI bot now.</span></p>
+            </div>
+            <div class="character">
+                <img src="/static/styles/images/our_bot.png" alt="AI Bot" class="animated-character">
+            </div>
+        </div>
+        <div class="login-section">
+            <h1>Welcome to Hotel Hub!</h1>
+            <p>Please sign in to your account and start the journey</p>
+            <form action="/auth/login" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+
+                <!-- Şifre Alanı ve Göz Butonu -->
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <span class="toggle-password" onclick="togglePassword()">👁</span>
+                </div>
+
+                <div class="actions">
+                    
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            
+            <p>New here? <a href="/auth/register">Create an account</a></p>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("password");
+            var toggleIcon = document.querySelector(".toggle-password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.innerHTML = "🙈";
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.innerHTML = "👁";
+            }
+        }
+    </script>
+
+</body>
+</html>

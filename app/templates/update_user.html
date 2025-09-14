@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update User</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: #333;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 3rem 2rem 2rem 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background-color: #3498db;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .back-btn {
+      display: block;
+      margin: 2rem auto 0 auto;
+      background-color: #95a5a6;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      color: white;
+      text-align: center;
+      width: fit-content;
+    }
+
+    .back-btn:hover {
+      background-color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+  <h1>Admin Dashboard</h1>
+  <a href="{{ url_for('auth.logout') }}">
+    <button class="logout-btn">Logout</button>
+  </a>
+</header>
+
+
+  <main>
+    <h2>Update User: {{ user.username }}</h2>
+    <form method="POST" action="{{ url_for('admin_bp.update_user', user_id=user.id) }}">
+      <label>First Name</label>
+      <input type="text" name="first_name" value="{{ user.first_name }}" required>
+
+      <label>Last Name</label>
+      <input type="text" name="last_name" value="{{ user.last_name }}" required>
+
+      <label>Email</label>
+      <input type="email" name="email" value="{{ user.email }}" required>
+
+      <label>Username</label>
+      <input type="text" name="username" value="{{ user.username }}" required>
+
+      <label>Gender</label>
+      <input type="text" name="gender" value="{{ user.gender }}">
+
+      <label>Country</label>
+      <input type="text" name="country" value="{{ user.country }}">
+
+      <label>City</label>
+      <input type="text" name="city" value="{{ user.city }}">
+
+      <label>Role</label>
+      <select name="role" required>
+        <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+        <option value="staff" {% if user.role == 'staff' %}selected{% endif %}>Staff</option>
+        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+      </select>
+
+      <button type="submit">Update</button>
+    </form>
+
+    <a href="{{ url_for('admin_bp.admin_panel') }}" class="back-btn">← Back to Admin Panel</a>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Review Analyzer</title>
+  <link rel="stylesheet" href="/static/styles/styles.css">
+
+</head>
+<body>
+  <!-- Üst Bar -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="/static/styles/images/logo.png" alt="Logo" class="logo">
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+          <li><a href="/gpt/plans">Plans</a></li>
+          <li><a href="/gpt/favorites">Favorites</a></li>
+          <li><a href="/chat_bot">AI ChatBot</a></li>
+        </ul>
+      </nav>
+    </div>
+
+  <div class="navbar-right">
+  <form action="{{ url_for('auth.profile') }}" method="GET" style="display:inline;">
+    <button type="submit" class="profile-btn">My Profile</button>
+  </form>
+  <form action="/auth/logout" method="GET" style="display:inline; margin-left: 10px;">
+    <button type="submit" class="logout-btn">Logout</button>
+  </form>
+</div>
+
+  </header>
+  
+
+  <div class="hero">
+    <div class="overlay">
+      <div class="content">
+        <h1>Analyze Hotel Reviews Effortlessly</h1>
+        <p>Not sure about a safe, clean, comfortable hotel?</p>
+        <p>Please send the Booking.com link</p>
+        <div class="input-container">
+            <form action="/gpt/analyze" method="POST">
+              <input type="url" id="url-input" name="url" placeholder="Enter hotel website URL" required>
+              <button type="submit" id="analyze-button">Analyze Reviews</button>
+            </form>
+          </div>          
+      </div>
+    </div>
+  </div>
+<!-- ✅ Yorum yoksa gösterilecek flash mesaj kutusu -->
+{<!-- ✅ Popup Flash Mesaj -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if message == "No reviews found to analyze." %}
+        <div id="popup-flash" class="popup-alert">
+          {{ message }}
+        </div>
+        <script>
+          setTimeout(() => {
+            const popup = document.getElementById("popup-flash");
+            if (popup) {
+              popup.style.opacity = '0';
+              popup.style.transform = 'translateY(-20px)';
+              setTimeout(() => popup.remove(), 1000); // animasyon sonrası kaldır
+            }
+          }, 5000);
+        </script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<style>
+  .popup-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+    transition: all 0.6s ease;
+    font-weight: bold;
+  }
+</style>
+
+
+
+  <section class="info-section">
+    <div class="info-content">
+      <img src="/static/styles/images/lobby.jpg" alt="Hotel Lobby">
+      <div class="text-content">
+        <h2>Welcome to Luxurious Spaces</h2>
+        <p>Your hotel deserves the best. Let our platform identify customer satisfaction trends and actionable insights from real guest reviews.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="info-content">
+      <img src="/static/styles/images/bedroom.jpg" alt="Hotel Room">
+      <div class="text-content">
+        <h2>Elegance Meets Comfort</h2>
+        <p>Understanding your guests’ preferences is vital. Discover what your guests love and where you can improve using AI-driven review analysis.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="info-content">
+      <img src="/static/styles/images/review.jpg" alt="Guest Reviewing">
+      <div class="text-content">
+        <h2>Every Guest's Voice Matters</h2>
+        <p>Transform every review into an opportunity to enhance guest satisfaction. Leverage AI to make data-driven decisions.</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

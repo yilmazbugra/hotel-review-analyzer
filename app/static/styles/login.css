@@ -1,0 +1,251 @@
+/* Genel Stil */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #FAF6F1;
+    color: black;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    border-bottom: 2px solid #ccc;
+    height: 80px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 90px;
+    margin-right: 1rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #132144;
+}
+
+.navbar-right .login-btn,
+.navbar-right .signup-btn {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+
+.login-btn {
+    color: black;
+}
+
+.signup-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.signup-btn:hover {
+    background-color: #218838;
+}
+
+/* Login Container */
+.login-container {
+    display: flex;
+    height: calc(100vh - 80px);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Grafik Alanı */
+.graphic-section {
+    flex: 1;
+    text-align: center;
+    padding: 2rem;
+}
+
+.graphic-section h3 {
+    font-size: 1.8rem;
+    color: #132144;
+    margin-bottom: 0.5rem;
+}
+
+.graphic-section p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.graphic-section span {
+    display: block;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.character img {
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Login Form Alanı */
+.login-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1;
+}
+
+.login-section h1 {
+    font-size: 2rem;
+    color: #132144;
+    margin-bottom: 0.5rem;
+}
+
+.login-section p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.login-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.login-section input {
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #FAF6F1;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding: 0.8rem;
+    padding-right: 40px; /* Göz ikonuna yer bırak */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #FAF6F1;
+    box-sizing: border-box;
+    height: 48px; /* Eşit yükseklik için sabit değer */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1;
+    height: 48px; /* Aynı yükseklikte hizalanması için */
+    display: flex;
+    align-items: center;
+}
+
+
+/* Buton */
+.login-section button {
+    background-color: #28a745;
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.login-section button:hover {
+    background-color: #218838;
+}
+
+/* Diğer Linkler */
+.login-section .actions {
+    text-align: right;
+}
+
+.login-section .actions a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.login-section .actions a:hover {
+    text-decoration: underline;
+}
+
+.login-section p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-section p a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        padding-top: 2rem;
+    }
+
+    .graphic-section {
+        padding: 1rem;
+    }
+
+    .login-section {
+        padding: 1.5rem;
+    }
+}

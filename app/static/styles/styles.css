@@ -1,0 +1,212 @@
+/* Genel Stil */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background-color: #FAF6F1;
+  color: black;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  color: black;
+  border-bottom: 2px solid #cccccc;
+  font-size: 1.2rem;
+  height: 80px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 90px;
+  margin-right: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  color: #132144;
+}
+
+/* Ortak buton stili */
+.navbar-right button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+  line-height: 1;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  min-width: 120px; /* eşit genişlik için sabit değer */
+}
+
+/* Renkler */
+.profile-btn {
+  background-color: #28a745;
+}
+.profile-btn:hover {
+  background-color: #218838;
+}
+
+.logout-btn {
+  background-color: #dc3545;
+}
+.logout-btn:hover {
+  background-color: #c82333;
+}
+
+
+
+
+
+/* Hero Section */
+.hero {
+  background: url('/static/styles/images/background_index.jpg') no-repeat center center/cover;
+  height: 90vh;
+  position: relative;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+.content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.content p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.input-container {
+  margin-top: 1rem;
+}
+
+.input-container input {
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+  max-width: 90%;
+  margin-right: 10px;
+}
+
+.input-container button {
+  padding: 0.8rem 1.2rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background-color: #218838;
+}
+
+/* Info Sections */
+.info-section {
+  padding: 3rem 2rem;
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-content {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.info-content img {
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.text-content {
+  flex: 1;
+}
+
+.text-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #132144;
+}
+
+.text-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+  .info-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero {
+    height: 70vh;
+  }
+
+  .content h1 {
+    font-size: 2rem;
+  }
+
+  .text-content h2 {
+    font-size: 1.5rem;
+  }
+}

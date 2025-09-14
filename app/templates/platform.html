@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video & Introduction</title>
+    <link rel="stylesheet" href="/static/styles/platform.css">
+</head>
+<body>
+
+    <!-- Navbar (Consistent with Other Pages) -->
+    <header class="navbar">
+        <div class="navbar-left">
+            <img src="static/styles/images/logo.png" alt="Logo" class="logo">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/platform">Platform</a></li>
+                    <li><a href="/about_us">About Us</a></li>
+                   
+                </ul>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <a href="/auth/login" class="login-btn">Log In</a>
+            <a href="/auth/register" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="left-container">
+            <div class="video-container">
+                <iframe id="youtube-video" src="https://www.youtube.com/embed/IlFuXyYdOw0" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="right-container">
+            <h1 class="hero-text">Welcome to Our Website</h1>
+            <p class="sub-text">
+                This website aims to enhance user experience by offering AI-powered solutions.
+                With our innovative projects and passion for modern technologies, we are committed to providing you with the best services.
+            </p>
+            <a href="/auth/register" class="cta-button">Join Us!</a>
+        </div>
+    </div>
+
+    <script src="/static/platform.js"></script>
+</body>
+</html>

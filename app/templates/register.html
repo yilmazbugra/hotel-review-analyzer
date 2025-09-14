@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Hotel Hub</title>
+    <link rel="stylesheet" href="/static/styles/register_styles.css">
+</head>
+<body>
+
+    <!-- Üst Bar -->
+    <header class="navbar">
+        <div class="navbar-left">
+            <img src="/static/styles/images/logo.png" alt="Logo" class="logo">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/platform">Platform</a></li>
+                    <li><a href="/about_us">About Us</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <a href="/auth/login" class="login-btn">Log In</a>
+            <a href="/auth/register" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <div class="register-container">
+        <div class="graphic-section">
+            <div class="statistic">
+                <h3>Hotel Hub</h3>
+                <p>Welcome to the magical world of AI! 
+                    <span>Create your account to access the analysis of comments about your business with our advanced AI system.</span>
+                </p>
+            </div>
+            <div class="statistic">
+                <h3>Advanced Insights</h3>
+                <p>Please register for your AI focused analyses. <span>Our AI bot</span></p>
+            </div>
+            <div class="character">
+                <img src="/static/styles/images/our_bot.png" alt="AI Bot" class="animated-character">
+            </div>
+        </div>
+        <div class="register-section">
+            <h1>Create an Account</h1>
+            <p>Fill in the details below to get started</p>
+            <form action="/auth/register" method="POST">
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <select name="gender" required>
+                    <option value="" disabled selected>Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <input type="text" name="country" placeholder="Country" required>
+                <input type="text" name="city" placeholder="City" required>
+                <select name="role" required>
+                    <option value="" disabled selected>Role</option>
+                    <option value="Staff">Staff</option>
+                    <option value="User">User</option>
+                </select>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="/auth/login">Login here</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

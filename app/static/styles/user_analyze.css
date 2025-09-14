@@ -1,0 +1,172 @@
+/* Genel Stil */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background-color: #FAF6F1;
+  color: black;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  color: black;
+  border-bottom: 2px solid #cccccc;
+  height: 80px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 90px;
+  margin-right: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  color: #132144;
+}
+
+.navbar-right form {
+  margin: 0;
+}
+
+.logout-btn {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #e63939;
+}
+
+/* Ana İçerik */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.result-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.result-container h1 {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.result-container h2 {
+  color: #444;
+  margin-top: 1.2rem;
+}
+
+.result-container p {
+  font-size: 1.1rem;
+  margin-top: 0.8rem;
+}
+
+/* Butonlar */
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.actions .btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-back {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-back:hover {
+  background-color: #0056b3;
+}
+
+.btn-new-analysis {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-new-analysis:hover {
+  background-color: #218838;
+}
+.explore-section {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.explore-section h2 {
+  font-size: 1.8rem;
+  color: #e67e22;
+  margin-bottom: 1rem;
+}
+
+.explore-section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.btn-fav {
+  margin-top: 1rem;
+  background-color: #28a745;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-fav:hover {
+  background-color: #218838;
+}

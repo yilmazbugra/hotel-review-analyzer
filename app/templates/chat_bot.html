@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI ChatBot</title>
+  <script src="/static/script.js"></script>
+  <link rel="stylesheet" href="/static/styles/chat_bot.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <header class="navbar">
+  <div class="navbar-left">
+    <img src="/static/styles/images/logo.png" alt="Logo" class="logo" />
+    <nav>
+      <ul class="nav-links">
+  {% if current_user.role == 'user' %}
+    <li><a href="{{ url_for('auth.user_index') }}">Home</a></li>
+    <li><a href="/gpt/plans">Plans</a></li>
+    <li><a href="/gpt/favorites">Favorites</a></li>
+    
+    
+  {% elif current_user.role == 'staff' %}
+    <li><a href="{{ url_for('auth.owner_index') }}">Home</a></li>
+    <li><a href="/analytics">Analytics</a></li>
+    <li><a href="/owner_reviews">Reviews</a></li>
+  {% elif current_user.role == 'admin' %}
+    <li><a href="{{ url_for('auth.admin_index') }}">Home</a></li>
+  {% endif %}
+  <li><a href="/chat_bot">AI ChatBot</a></li>
+</ul>
+
+    </nav>
+  </div>
+
+  <div class="navbar-right">
+    <form action="{{ url_for('auth.profile') }}" method="GET" style="display: inline;">
+      <button type="submit" class="profile-btn">My Profile</button>
+    </form>
+    <form action="/auth/logout" method="GET" style="display: inline;">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  </div>
+</header>
+
+  <!-- ✅ Chat Container -->
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>AI ChatBot</h2>
+    </div>
+
+    <!-- 💬 Mesaj kutusu -->
+    <div class="chat-box" id="chat-box">
+      <!-- Bot mesajları burada listelenecek -->
+    </div>
+
+    <!-- ⏳ Bot yazıyor animasyonu -->
+    <p id="typing-indicator" style="display: none; padding: 0 1rem; color: #888;">🤖 Typing...</p>
+
+
+    <!-- 👤 Kullanıcı giriş alanı -->
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Write something..." autocomplete="off" />
+      <button onclick="sendMessage()" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- ✅ Script -->
+  
+</body>
+</html>

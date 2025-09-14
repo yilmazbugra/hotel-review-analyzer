@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Review Analysis</title>
+  <link rel="stylesheet" href="/static/styles/owner_analyze.css" />
+</head>
+<body>
+
+  <!-- ✅ NAVBAR (owner_index ile birebir uyumlu) -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="/static/styles/images/logo.png" alt="Logo" class="logo" />
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('auth.owner_index') }}">Home</a></li>
+          <li><a href="/analytics">Analytics</a></li>
+          <li><a href="{{ url_for('owner_reviews') }}">Reviews</a></li>
+          <li><a href="/chat_bot">AI ChatBot</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navbar-right">
+      <form action="{{ url_for('auth.profile') }}" method="GET" style="display:inline;">
+        <button type="submit" class="profile-btn">My Profile</button>
+      </form>
+      <form action="{{ url_for('auth.logout') }}" method="GET" style="display:inline; margin-left: 10px;">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- ✅ Main Content -->
+  <main class="main-content">
+    
+    <!-- GPT Yorum Analizi Kutusu -->
+    <section class="summary-card">
+      <img src="/static/styles/images/review_images.png" class="summary-image" alt="Analysis Visual" />
+      <div class="summary-text">
+        <h2>AI-Powered Review Summary</h2>
+        <p class="subtitle">Here’s the analysis based on your customer reviews:</p>
+        <div class="analysis-box">
+          {{ analysis.summary }}
+        </div>
+      </div>
+    </section>
+
+    <!-- GPT Öneriler Kutusu -->
+    <section class="summary-card" style="margin-top: 2rem;">
+      <div class="summary-text">
+        <h2>AI Suggestions for Service Improvement</h2>
+        <p class="subtitle">Based on the reviews, here are actionable suggestions to improve your hotel services:</p>
+        <div class="analysis-box">
+  <ul>
+    {% for item in analysis.suggestions %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+      </div>
+    </section>
+
+    <!-- Geri Dönüş Butonları -->
+    <section class="actions">
+      <a href="{{ url_for('auth.owner_index') }}" class="btn btn-back">← Back to Dashboard</a>
+      <a href="/owner/form" class="btn btn-new-analysis">New Analysis</a>
+    </section>
+  </main>
+</body>
+</html>

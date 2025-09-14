@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: #333;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .add-user-btn {
+      display: inline-block;
+      margin-bottom: 1rem;
+      background-color: #2ecc71;
+      color: white;
+      padding: 0.6rem 1rem;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .add-user-btn:hover {
+      background-color: #27ae60;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    button {
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.7rem;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 2px;
+    }
+
+    button:hover {
+      background-color: #d35400;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <h1>Admin Dashboard</h1>
+    <form action="{{ url_for('auth.logout') }}" method="GET" style="display: inline;">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  </header>
+
+  <main>
+    <h2>All Users</h2>
+
+    <!-- Add New User Button -->
+    <a href="{{ url_for('admin_bp.create_user_form') }}" class="add-user-btn">+ Add New User</a>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First</th>
+            <th>Last</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Gender</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.username }}</td>
+            <td>••••••••</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.country }}</td>
+            <td>{{ user.city }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <form action="{{ url_for('admin_bp.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+              <a href="{{ url_for('admin_bp.update_user_form', user_id=user.id) }}">
+                <button>Update</button>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>
