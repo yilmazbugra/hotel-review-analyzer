@@ -134,9 +134,17 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Step 4: Database Setup
+### Step 4: Environment Setup
 1. Create a MySQL database named `hotel_system`
-2. Update the database configuration in `config.py`
+2. Copy the example environment file:
+   ```bash
+   cp config_example.py .env
+   ```
+3. Update the `.env` file with your actual configuration values:
+   ```bash
+   # Edit .env file with your actual values
+   nano .env
+   ```
 
 ### Step 5: Run the Application
 ```bash
@@ -147,16 +155,38 @@ The application will be available at `http://localhost:5000`
 
 ## ⚙️ Configuration
 
-Update the database configuration in `config.py`:
+### Environment Variables
+The application uses environment variables for secure configuration. Create a `.env` file in the root directory:
 
-```python
-class Config:
-    SECRET_KEY = 'your-secret-key'
-    MYSQL_HOST = 'localhost'
-    MYSQL_USER = 'your-username'
-    MYSQL_PASSWORD = 'your-password'
-    MYSQL_DB = 'hotel_system'
+```bash
+# Copy the example file
+cp config_example.py .env
+
+# Edit with your actual values
+nano .env
 ```
+
+### Required Environment Variables
+```env
+# Flask Configuration
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+
+# MySQL Database Configuration
+MYSQL_HOST=localhost
+MYSQL_USER=root
+MYSQL_PASSWORD=your-password
+MYSQL_DB=hotel_system
+
+# API Keys
+OPENAI_API_KEY=your-openai-api-key-here
+```
+
+### Security Notes
+- ⚠️ **Never commit your `.env` file to version control**
+- 🔒 Keep your API keys and passwords secure
+- 🛡️ Use strong, unique passwords for production
+- 📝 The `.env` file is already included in `.gitignore`
 
 ## 📖 Usage
 
